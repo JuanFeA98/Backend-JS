@@ -1,5 +1,6 @@
 const express = require('express');
-const faker = require('faker');
+
+const routerApi = require('./routes')
 
 const app = express();
 const port = 5000;
@@ -13,35 +14,9 @@ app.get('/nueva_ruta', (req, res)=>{
   res.send('Hola, soy una ruta nueva!')
 });
 
-app.get('/productos', (req, res)=>{
-  const products = [];
 
-  const { size } = req.query;
-  const limit = size || 10;
+routerApi(app)
 
-  for (let index=0; index<limit; index++){
-    products.push({
-      name: faker.commerce.productName(),
-      price: parseInt(faker.commerce.price(), 10),
-      image: faker.image.imageUrl()
-    })
-  }
-
-  res.json(products)
-});
-
-// Endpoint GET con un parametro
-app.get('/productos/:id', (req, res)=>{
-  const { id }= req.params;
-
-  res.json(
-    {
-      id,
-      name: 'Producto 2',
-      price: 31
-    }
-  )
-})
 
 // Endpoint GET con varios parametros
 app.get('/categories/:category_id/products/:product_id', (req, res)=>{
