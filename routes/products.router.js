@@ -41,11 +41,10 @@ router.post('/', (req, res)=>{
   })
 })
 
-
 router.patch('/:id', (req, res)=>{
   const { id } = req.params;
-
   const body = req.body;
+
   res.json({
     message: 'Updated',
     data:body,
@@ -53,5 +52,13 @@ router.patch('/:id', (req, res)=>{
   })
 })
 
+router.delete('/:id', (req, res)=>{
+  const { id } = req.params;
+
+  res.json({
+    message: 'Deleted',
+    id
+  })
+})
 
 module.exports = router
