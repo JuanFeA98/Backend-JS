@@ -1,5 +1,7 @@
 const express = require('express');
-const routerApi = require('./routes')
+const cors = require('cors');
+
+const routerApi = require('./routes');
 
 const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler')
 
@@ -7,6 +9,18 @@ const app = express();
 const port = 5000;
 
 app.use(express.json());
+
+const whitelist = ['http://localhost:5000', 'myapp.com']
+const options = {
+  origin: (origin, callback)=>{
+    if(whitelist.includes(origin)){
+      callback(null, true)
+    } else {
+      callback(new Error('No permitido'))
+    }
+  }
+}
+app.use(cors(options));
 
 // Endpoint base GET
 app.get('/', (req, res)=>{
